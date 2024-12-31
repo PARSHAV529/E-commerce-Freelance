@@ -5,7 +5,7 @@ import { InputBase , Box , styled,List, ListItem } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../../redux/actions/productActions";
+import { getProducts } from "../../redux/actions/productActions"
 import { Link } from "react-router-dom";
 
 const SearchContainer = styled(Box)`
