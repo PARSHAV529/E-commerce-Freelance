@@ -1,11 +1,11 @@
-const dressType = 'gown'
+const dressType = 'choli'
 
-export const gown = [
+export const choli = [
     {
-        id: '6',
+        id: 'krutis1',
         type: dressType,
 
-        url: "https://res.cloudinary.com/drsuf7z53/image/upload/v1735653607/E-commerce/WhatsApp_Image_2024-12-31_at_18.40.37_4c51acf7_avkrpt.jpg",
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653600/E-commerce/IMG-20241231-WA0021_pyqkic.jpg',
         detailUrl: "https://imgur.com/SeXkzkg.png",
         title: {
             shortTitle: 'Ethnic Embroidered Kurta Set',
@@ -20,10 +20,10 @@ export const gown = [
         description: 'This elegant kurta set includes a beautifully embroidered kurta, salwar, and a Gaagi dupatta, perfect for festive and traditional events.',
     },
     {
-        id: '7',
+        id: 'krutis2',
         type: dressType,
 
-        url: "https://res.cloudinary.com/drsuf7z53/image/upload/v1735653608/E-commerce/WhatsApp_Image_2024-12-31_at_18.40.37_12be6336_xncrwy.jpg",
+        url: "https://res.cloudinary.com/drsuf7z53/image/upload/v1735653608/E-commerce/IMG-20241231-WA0025_raksg3.jpg",
         detailUrl: "https://imgur.com/b4FYoRe.png",
         title: {
             shortTitle: 'White Kurti with Red Dupatta',
@@ -38,10 +38,10 @@ export const gown = [
         description: 'This graceful white kurti comes with a striking red dupatta, offering a perfect blend of simplicity and elegance.',
     },
     {
-        id: '8',
+        id: 'krutis3',
         type: dressType,
 
-        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653609/E-commerce/WhatsApp_Image_2024-12-31_at_18.40.38_aff7db3d_dsgzga.jpg',
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653598/E-commerce/WhatsApp_Image_2024-12-31_at_18.50.28_b7de1fb8_j0scnn.jpg',
         detailUrl: 'https://imgur.com/gyzI6Bt.png',
         title: {
             shortTitle: 'White Kurti with Designer Scarf',
@@ -56,10 +56,10 @@ export const gown = [
         description: 'This modern white kurti with a designer scarf is a versatile outfit, ideal for both everyday wear and special occasions.',
     },
     {
-        id: '9',
+        id: 'krutis4',
         type: dressType,
 
-        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653606/E-commerce/IMG-20241231-WA0019_xhzftb.jpg',
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653609/E-commerce/WhatsApp_Image_2024-12-31_at_18.50.28_1194bfef_qtctac.jpg',
         detailUrl: '',
         title: {
             shortTitle: 'Choli with Dupatta',
@@ -74,10 +74,10 @@ export const gown = [
         description: 'This sophisticated choli and dupatta set exudes charm and is perfect for weddings and festive celebrations.',
     },
     {
-        id: '10',
+        id: 'krutis5',
         type: dressType,
 
-        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653607/E-commerce/IMG-20241231-WA0020_m3duka.jpg',
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653599/E-commerce/WhatsApp_Image_2024-12-31_at_18.50.28_ed4dcd04_usq1wn.jpg',
         detailUrl: '',
         title: {
             shortTitle: 'Classic Outfit',

@@ -10,7 +10,7 @@ import {
     Grid,
 } from "@mui/material";
 
-import { LocalOffer as Badge } from "@mui/icons-material";
+import { LocalOffer as Badge, LocalShipping } from "@mui/icons-material";
 import ActionItem from "./ActionItems";
 
 const ProductContainer = styled(Box)`
@@ -23,7 +23,7 @@ const ProductImageContainer = styled(Box)`
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 `;
 
 const ProductImage = styled("img")`
@@ -137,6 +137,69 @@ const ProductDetail = ({ product }) => {
                         <span style={{ fontWeight: 600 }}>BUY FIRST TIME</span>
                     </BestOffer>
                 </SmallText>
+                                {/* Delivery Options */}
+                                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell colSpan={2}>
+                                <BestOffer style={{ color: "#212121", fontWeight: 600 }}>
+                                    <LocalShipping
+                                    
+                                    style={{ fontSize: 27, marginRight: 10 }} />
+                                    Delivery Options:
+                                </BestOffer>
+                                <Typography
+                                    style={{ color: "#878787", marginTop: 8, fontSize: 14 }}
+                                >
+                                    Please enter PIN code to check delivery time & Pay on Delivery Availability
+                                </Typography>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <BestOffer>
+                                    Delivery by {date.toDateString()} ||{" "}
+                                    <span style={{ color: "green" }}>Delivery Charges: Free</span>
+                                </BestOffer>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <BestOffer style={{ fontWeight: 600 }}>
+                                    100% Original Products
+                                </BestOffer>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <BestOffer>Pay on delivery might be available</BestOffer>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <BestOffer>Easy 1 days returns and exchanges</BestOffer>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <img
+                                    src={adURL}
+                                    style={{ width: 390 }}
+                                    alt="Ad Banner"
+                                />
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>
+                                <BestOffer style={{ color: "#878787" }}>
+                                    Description:
+                                </BestOffer>
+                                <BestOffer>{product.description}</BestOffer>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+
 
                 <Grid item lg={4} md={8} sm={8} xs={12}>
                         <ActionItem product={product} />

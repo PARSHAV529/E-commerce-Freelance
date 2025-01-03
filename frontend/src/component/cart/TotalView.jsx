@@ -43,6 +43,9 @@ const TotalView = ({ cartItems }) => {
         totalAmount();
     }, [cartItems])
 
+    // console.log(cartItems);q
+    
+
     const totalAmount = () => {
         let price = 0, discount = 0;
         cartItems.map(item => {

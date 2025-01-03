@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    type:String,
     url: String,
     detailUrl: String,
     title: Object,

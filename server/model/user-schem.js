@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
+    },
+    userType:{
+        type: String,
+        default: 'user',
+        
     }
 });
 

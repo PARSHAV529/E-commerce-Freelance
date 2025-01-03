@@ -1,7 +1,9 @@
-export const products = [
+const dressType = 'dress'
+export const Dress = [
     {
-        id: 'product1',
-        url: "https://imgur.com/cXIpopC.png",
+        id: '1',
+        type: dressType,
+        url: "https://res.cloudinary.com/drsuf7z53/image/upload/v1735653395/E-commerce/WhatsApp_Image_2024-12-31_at_18.31.10_dcef2ad5_ogwwmm.jpg",
         detailUrl: "https://imgur.com/b4FYoRe.png",
         title: {
             shortTitle: 'Choli in Purple Color',
@@ -16,8 +18,10 @@ export const products = [
         description: 'This stunning choli in purple is perfect for festive and traditional occasions, featuring a rich color and premium quality fabric.',
     },
     {
-        id: 'product2',
-        url: "https://imgur.com/CXCwCPn.jpg",
+        id: '2',
+        type: dressType,
+
+        url: "https://res.cloudinary.com/drsuf7z53/image/upload/v1735653409/E-commerce/WhatsApp_Image_2024-12-31_at_18.31.13_a47ca1c7_qyje0p.jpg",
         detailUrl: "https://imgur.com/CXCwCPn.jpg",
         title: {
             shortTitle: 'Three-piece Dress',
@@ -32,8 +36,10 @@ export const products = [
         description: 'This three-piece dress combines style and comfort, making it ideal for casual and semi-formal occasions.',
     },
     {
-        id: 'product3',
-        url: 'https://i.ibb.co/ryh4QZW/gown.jpg',
+        id: '3',
+        type: dressType,
+
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653605/E-commerce/IMG-20241231-WA0008_zu3o30.jpg',
         detailUrl: 'https://i.ibb.co/RjDbkn2/gown-2.jpg',
         title: {
             shortTitle: 'Red Gown',
@@ -48,8 +54,10 @@ export const products = [
         description: 'This beautiful red gown offers a sleek design and elegant flow, perfect for evening wear and parties.',
     },
     {
-        id: 'product4',
-        url: 'https://i.ibb.co/Jz1ZF0W/choli-3.jpg',
+        id: '4',
+        type: dressType,
+
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653618/E-commerce/IMG-20241231-WA0010_zngvfu.jpg',
         detailUrl: 'https://i.ibb.co/2hZVbxv/choli-4.jpg',
         title: {
             shortTitle: 'Choli with Dupatta',
@@ -64,8 +72,10 @@ export const products = [
         description: 'This chic choli and dupatta set is crafted with attention to detail, making it a standout choice for special occasions.',
     },
     {
-        id: 'product5',
-        url: 'https://imgur.com/a/wKWok3s.jpg',
+        id: '5',
+        type: dressType,
+
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653600/E-commerce/IMG-20241231-WA0009_njuqf2.jpg',
         detailUrl: 'https://imgur.com/a/M9kcFi9.jpg',
         title: {
             shortTitle: '',

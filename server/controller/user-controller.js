@@ -1,38 +1,61 @@
 
-
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 import User from '../model/user-schem.js';
+const SECRET_KEY = 'Parshav12345';
 
-export const userSignup = async (request,response) => {
+export const userSignup = async (request, response) => {
     try {
+        const { username, password, ...otherDetails } = request.body;
 
-        const exist = await User.findOne({ username: request.body.username });
+        // Check if username already exists
+        const exist = await User.findOne({ username });
         if (exist) {
-            return response.status(401).json({ message: 'Username already exist '});
+            return response.status(401).json({ message: 'Username already exists' });
         }
 
-        const user = request.body;
-        const newUser = new User(user);
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user with hashed password
+        const newUser = new User({ ...otherDetails, username, password: hashedPassword });
         await newUser.save();
 
-        response.status(200).json({message: user});
+        response.status(200).json({ message: 'Signup successful' });
     } catch (error) {
-        response.status(500).json({ message: error.message});
+        response.status(500).json({ message: error.message });
     }
-}
+};
 
-export const userLogin = async (request,response) => {
+export const userLogin = async (request, response) => {
     try {
-        const username = request.body.username;
-        const password = request.body.password;
+        const { username, password } = request.body;
 
-        let user = await User.findOne({ username: username, password:password});
-        if (user) {
-            return response.status(200).json({ data: user});
+        const user = await User.findOne({ username });
+        if (user && await bcrypt.compare(password, user.password)) {
+            const token = jwt.sign({ id: user._id, username: user.username }, SECRET_KEY, { expiresIn: '1h' });
+            const data = {
+                token,username
+            } // Generate JWT
+            return response.status(200).json({ data, message: 'Login successful' });
         } else {
-            return response.status(401).json('Invalid login');
+            return response.status(401).json({ message: 'Invalid login credentials' });
         }
     } catch (error) {
-        response.status(500).json('Error ',error.message);
+        response.status(500).json({ message: error.message });
     }
-}
+};
+
+export const getUserData = async (request, response) => {
+    const token = request.headers['x-access-token']
+    if (!token) return response.status(401).json({ message: 'Unauthorized' });
+
+    try {
+        const decoded = jwt.verify(token, 'Parshav12345');
+        const user = await User.findById(decoded.id).select('-password'); // Exclude password
+        response.status(200).json(user);
+    } catch (error) {
+        response.status(401).json({ message: 'Invalid or expired token' });
+    }
+};
