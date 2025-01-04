@@ -86,13 +86,18 @@ const LoginDialog = ({ open, setOpen }) => {
     const onInputChange = (e) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     };
-
     const signupUser = async () => {
         let response = await authenticateSignup(signup);
-        if (!response) return;
-        handleClose();
-        setAccount(signup.firstname);
+        if (response?.status === 200) {
+            const { data } = response.data;
+            localStorage.setItem('token', data.token); // Store the JWT token
+            handleClose();
+            setAccount(signup.username);
+        } else {
+            setError(true); // Show error if signup fails
+        }
     };
+    
 
     const onValueChange = (e) => {
         setLogin({ ...login, [e.target.name]: e.target.value });

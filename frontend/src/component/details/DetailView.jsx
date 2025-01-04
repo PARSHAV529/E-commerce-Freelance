@@ -10,6 +10,7 @@ import { Box, Grid, styled, Typography } from "@mui/material";
 import ActionItem from "./ActionItems";
 import ProductDetail from "./ProductDetail";
 import Slide from "../home/slide"; // Assuming Slide is the same as in your home page
+import Reviews from "./Review";
 
 const Components = styled(Box)`
     margin-top: 55px;
@@ -92,6 +93,7 @@ const DetailView = () => {
                         </RightContainer>
                     </Container>
                     
+                    <Reviews productId={id} /> {/* Add Reviews Component */}
                     {/* Suggestions Section */}
                     <Suggestions>
                         {

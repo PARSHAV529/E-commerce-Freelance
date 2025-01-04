@@ -22,7 +22,18 @@ export const userSignup = async (request, response) => {
         const newUser = new User({ ...otherDetails, username, password: hashedPassword });
         await newUser.save();
 
-        response.status(200).json({ message: 'Signup successful' });
+        // Generate JWT token for the new user
+        const token = jwt.sign(
+            { id: newUser._id, username: newUser.username },
+            SECRET_KEY,
+          
+        );
+
+        // Respond with token and message
+        response.status(200).json({ 
+            data: { token, username: newUser.username }, 
+            message: 'Signup and login successful' 
+        });
     } catch (error) {
         response.status(500).json({ message: error.message });
     }
@@ -34,7 +45,7 @@ export const userLogin = async (request, response) => {
 
         const user = await User.findOne({ username });
         if (user && await bcrypt.compare(password, user.password)) {
-            const token = jwt.sign({ id: user._id, username: user.username }, SECRET_KEY, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user._id, username: user.username }, SECRET_KEY, );
             const data = {
                 token,username
             } // Generate JWT

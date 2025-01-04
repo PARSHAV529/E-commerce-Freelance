@@ -1,7 +1,7 @@
 import express from "express";
 
 import { userSignup, userLogin , getUserData } from '../controller/user-controller.js';
-import { getProducts,getProductById } from '../controller/product-controller.js';
+import { getProducts,getProductById ,postProductReviewById , getProductReviewById} from '../controller/product-controller.js';
 // import {createOrder} from "../controller/payment.js";
 
 
@@ -16,6 +16,8 @@ router.get('/user',getUserData)
 
 router.get('/products',getProducts)
 router.get('/product/:id',getProductById)
+router.post('/product/:id/review',postProductReviewById)
+router.get('/product/:id/reviews',getProductReviewById)
 
 
 
