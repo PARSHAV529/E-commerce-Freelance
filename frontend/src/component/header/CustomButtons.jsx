@@ -1,40 +1,34 @@
-import { useState, useContext } from 'react';
-
-import { Badge, Box, Button, Typography , styled } from '@mui/material';
-import {LocalMall} from '@mui/icons-material';
+import { useState } from 'react';
+import { Badge, Box, Button, Typography, styled } from '@mui/material';
+import { LocalMall, Receipt } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { DataContext } from '../../context/DataProvider';
-
-//components
+// Components
 import LoginDialog from '../logn/LoginDialog';
 import Profile from './Profile';
-
+import { clearUser } from '../../redux/userSlice'; // Import action to clear user data
 
 const Wrapper = styled(Box)(({ theme }) => ({
     display: 'flex',
     margin: '0 3% 0 auto',
-    '& > * ':{
+    '& > * ': {
         marginRight: '95px !important',
-       
         alignItems: 'center',
     },
     [theme.breakpoints.down('md')]: {
-        display: 'block'
-    }
-}))
+        display: 'block',
+    },
+}));
 
 const Container = styled(Link)(({ theme }) => ({
     display: 'flex',
     textDecoration: 'none',
     color: 'inherit',
     [theme.breakpoints.down('md')]: {
-        display: 'block'
-    }
+        display: 'block',
+    },
 }));
-    
-
 
 const LoginButton = styled(Button)`
     font-weight: 600;
@@ -47,39 +41,52 @@ const LoginButton = styled(Button)`
     color: #fff;
 `;
 
-    
-
 const CustomButtons = () => {
+    const [open, setOpen] = useState(false);
 
-    const [ open , setOpen ] = useState(false);
+    const dispatch = useDispatch();
 
-    const { account,setAccount } = useContext(DataContext);
-
-    const { cartItems } = useSelector(state => state.cart);
+    // Use Redux to get account and cartItems
+    const account = useSelector((state) => state.user.user?.username);
+    const { cartItems } = useSelector((state) => state.cart);
 
     const openDialog = () => {
         setOpen(true);
-    }
+    };
 
-    return(
+    const handleLogout = () => {
+        dispatch(clearUser()); // Clear user data from Redux
+    };
+
+    return (
         <Wrapper>
-            {
-                account ? <Profile account={account} setAccount={setAccount} /> :
-                <LoginButton  onClick={() => openDialog()}>Login</LoginButton>
-            }
-            
+            {account ? (
+                <Profile account={account} onLogout={handleLogout} />
+            ) : (
+                <LoginButton onClick={openDialog}>Login</LoginButton>
+            )}
 
-            <Typography style={{marginTop: 10 , width: 130, fontSize: 18 }}>Explore More</Typography>
+            {/* <Typography style={{ marginTop: 10, width: 130, fontSize: 18 }}>
+                Explore More
+            </Typography> */}
+
+            <Container to="/order">
+                <Badge color="primary">
+                    <Receipt style={{ marginTop: 3, fontSize: 22, marginRight: 4 }} />
+                </Badge>
+                <Typography style={{ marginTop: 5, fontSize: 18 }}>Orders</Typography>
+            </Container>
 
             <Container to="/cart">
-                <Badge badgeContent={cartItems?.length} color='primary' >
-                    <LocalMall  style={{ marginTop: 3, fontSize: 22, marginRight: '4' }} />
+                <Badge badgeContent={cartItems?.length} color="primary">
+                    <LocalMall style={{ marginTop: 3, fontSize: 22, marginRight: 4 }} />
                 </Badge>
-                <Typography style={{ marginTop: 5 ,fontSize: 18, }}>Cart</Typography>
+                <Typography style={{ marginTop: 5, fontSize: 18 }}>Cart</Typography>
             </Container>
-            <LoginDialog open={open} setOpen={setOpen}/>
+
+            <LoginDialog open={open} setOpen={setOpen} />
         </Wrapper>
-    )
-}
+    );
+};
 
 export default CustomButtons;

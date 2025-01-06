@@ -38,13 +38,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    userType:{
+    userType: {
         type: String,
-        default: 'user',
-        
+        default: 'admin',
+    },
+    address: {
+        street: { type: String },
+        city: { type: String },
+        state: { type: String  },
+        zip: { type: String },
+        country: { type: String },
     }
 });
 
-const user = mongoose.model('user',userSchema);
+const User = mongoose.model('User', userSchema);
 
-export default user;
+export default User;

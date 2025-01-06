@@ -1,10 +1,10 @@
 import { Typography, Box, styled, Button } from "@mui/material";
-import { removeFromCart } from "../../redux/actions/cartAction";
+import { removeFromCart, updateItemQuantity } from "../../redux/actions/cartAction";
 import { useDispatch } from "react-redux";
-
 import { addEllipsis } from "../../utils/common-utils";
 
-import ButtonGroup from "./ButtonGroup";
+import GroupButton from "./ButtonGroup"; // Import GroupButton here
+import { useEffect, useState } from "react";
 
 const Component = styled(Box)`
     border-top: 1px solid #f0f0f0;
@@ -19,11 +19,11 @@ const LeftComponent = styled(Box)`
     flex-direction: column;
 
     & > img {
-        width: 100px; /* Adjust width as needed */
-        height: 100px; /* Adjust height as needed */
-        object-fit: cover; /* Ensures the image maintains aspect ratio */
-        border: 1px solid #f0f0f0; /* Optional: Add a border for better visibility */
-        border-radius: 8px; /* Optional: Adds rounded corners */
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
     }
 `;
 
@@ -37,16 +37,31 @@ const Remove = styled(Button)`
 
 const CartItem = ({ item }) => {
     const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(item.quantity || 1);
 
     const removeItemFromCart = (id) => {
         dispatch(removeFromCart(id));
     };
 
+    const handleQuantityIncrease = () => {
+        setQuantity((prev) => prev + 1);
+    };
+
+    const handleQuantityDecrease = () => {
+        setQuantity((prev) => Math.max(1, prev - 1));
+    };
+
+    // Dispatch updated quantity to the Redux store if needed
+    useEffect(() => {
+        // Update quantity in the cart store
+        dispatch(updateItemQuantity(item.id, quantity)); // Uncomment if you have an action for updating quantity
+    }, [quantity]);
+
     return (
         <Component>
             <LeftComponent>
                 <img src={item.url} alt="product" />
-                <ButtonGroup />
+                <GroupButton quantity={quantity} onIncrease={handleQuantityIncrease} onDecrease={handleQuantityDecrease} />
             </LeftComponent>
             <Box style={{ margin: 20 }}>
                 <Typography>{addEllipsis(item.title.longTitle)}</Typography>

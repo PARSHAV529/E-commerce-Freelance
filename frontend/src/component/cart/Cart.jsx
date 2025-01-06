@@ -1,6 +1,7 @@
-import { Typography, Grid, Box, styled, Button } from "@mui/material";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Typography, Grid, Box, styled, Button, CircularProgress } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // Components
 import CartItem from "./CartItem";
@@ -26,12 +27,21 @@ const ButtonWrapper = styled(Box)`
   background: #212121;
 `;
 
-const StyledButton = styled(Button)`
-  display: flex;
-  margin-left: auto;
-  width: 250px;
-  border-radius: 2px;
-`;
+const StyledButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  marginLeft: "auto",
+  width: "100%",
+  maxWidth: "250px",
+  borderRadius: "2px",
+  color: "#fff",
+  backgroundColor: "#000",
+  "&:hover": {
+    backgroundColor: "#333",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));
 
 const LeftComponent = styled(Grid)(({ theme }) => ({
   paddingRight: 15,
@@ -42,26 +52,46 @@ const LeftComponent = styled(Grid)(({ theme }) => ({
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  const navigate = useNavigate(); // Initialize navigate
+  const  user  = useSelector((state) => state.user); 
+  const address = user.user?.address;
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handlePayment = () => {
-    navigate("/checkout"); // Navigate to checkout page
+    if (!address) {
+      alert("Please add your address to proceed.");
+      navigate("/add-address"); // Navigate to add address page
+    } else {
+      navigate("/confirm-address"); // Navigate to checkout page
+    }
   };
+
+  useEffect(() => {
+    // Simulate loading for cart data if needed
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
-      {cartItems.length ? (
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="60vh">
+          <CircularProgress />
+        </Box>
+      ) : cartItems.length ? (
         <Container container>
           <LeftComponent item lg={9} md={9} sm={12} xs={12}>
             <Header>
-              <Typography>My WishList({cartItems.length})</Typography>
+              <Typography>My Cart ({cartItems.length})</Typography>
             </Header>
             {cartItems.map((item) => (
               <CartItem item={item} key={item.id} />
             ))}
             <ButtonWrapper>
-              <StyledButton onClick={handlePayment} style={{ color: "#fff" }}>
-                Place Order
+              <StyledButton onClick={handlePayment}>
+                {address ? "Confirm Address & Place Order" : "Add Address to Continue"}
               </StyledButton>
             </ButtonWrapper>
           </LeftComponent>

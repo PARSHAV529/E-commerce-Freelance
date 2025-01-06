@@ -1,17 +1,17 @@
+import { useState } from "react";
 import {
     Typography,
     Box,
     Button,
-    TableRow,
-    Table,
-    TableBody,
-    TableCell,
     styled,
     Grid,
 } from "@mui/material";
-
-import { LocalOffer as Badge, LocalShipping } from "@mui/icons-material";
+import { LocalOffer as Badge } from "@mui/icons-material";
 import ActionItem from "./ActionItems";
+import { useDispatch } from "react-redux";
+// import { useState } from "react";
+import { addToCart } from "../../redux/actions/cartAction";
+// import GroupButton from "./ButtonGroup"; // Import GroupButton
 
 const ProductContainer = styled(Box)`
     display: flex;
@@ -38,10 +38,14 @@ const DetailsContainer = styled(Box)`
     flex-direction: column;
 `;
 
-const ActionButtons = styled(Box)`
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+const BestOffer = styled(Typography)`
+    margin-top: 17px;
+`;
+
+const StyledBadge = styled(Badge)`
+    margin-right: 10px;
+    color: #00cc00;
+    font-size: 18px;
 `;
 
 const SmallText = styled(Box)`
@@ -52,19 +56,21 @@ const SmallText = styled(Box)`
     }
 `;
 
-const StyledBadge = styled(Badge)`
-    margin-right: 10px;
-    color: #00cc00;
-    font-size: 18px;
-`;
-
-const BestOffer = styled(Typography)`
-    margin-top: 17px;
-`;
-
 const ProductDetail = ({ product }) => {
-    const adURL = "https://imgur.com/HWJlsoE.png";
-    const date = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
+    const [selectedSize, setSelectedSize] = useState("");
+    const dispatch = useDispatch();
+
+    const handleSizeChange = (size) => {
+        setSelectedSize(size);
+    };
+
+    const addItemToCart = (quantity) => {
+        if (selectedSize) {
+            dispatch(addToCart(product.id, quantity, selectedSize));
+        } else {
+            alert("Please select a size");
+        }
+    };
 
     return (
         <ProductContainer>
@@ -76,134 +82,61 @@ const ProductDetail = ({ product }) => {
             {/* Right: Product Details */}
             <DetailsContainer>
                 <Typography variant="h5">{product.title.longTitle}</Typography>
-                <Typography
-                    style={{ marginTop: 5, color: "#878787", fontSize: 14 }}
-                >
+                <Typography style={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
                     8 Rating & 1 Review
                 </Typography>
-                <BestOffer style={{ marginTop: 13 }}>
+
+                <BestOffer>
                     <Box component="span" style={{ marginLeft: 15 }}>
                         <strike>₹{product.price.orignalCost}</strike>
                     </Box>
                     &nbsp;&nbsp;&nbsp;
-                    <Box
-                        component="span"
-                        style={{ fontSize: 22, color: "#212121" }}
-                    >
+                    <Box component="span" style={{ fontSize: 22, color: "#212121" }}>
                         ₹{product.price.mrp}
                     </Box>
                     &nbsp;&nbsp;&nbsp;
-                    <Box
-                        component="span"
-                        style={{ fontSize: 17, color: "#388E3C" }}
-                    >
+                    <Box component="span" style={{ fontSize: 17, color: "#388E3C" }}>
                         {product.price.discount}
                     </Box>
                 </BestOffer>
 
-                <Typography
-                    style={{
-                        marginTop: 16,
-                        fontSize: 18,
-                        marginRight: 7,
-                    }}
-                >
+                <Typography style={{ marginTop: 16, fontSize: 18 }}>
                     Select Your Size:
                 </Typography>
                 <Box style={{ display: "flex", gap: "10px", marginTop: 10 }}>
-                    <Button variant="outlined">M</Button>
-                    <Button variant="outlined">L</Button>
-                    <Button variant="outlined">XL</Button>
-                    <Button variant="outlined">XXL</Button>
+                    {["M", "L", "XL", "XXL"].map((size) => (
+                        <Button
+                            key={size}
+                            variant="outlined"
+                            onClick={() => handleSizeChange(size)}
+                            style={{
+                                background: selectedSize === size ? "#f0f0f0" : "",
+                                borderColor: selectedSize === size ? "#388E3C" : "#f0f0f0",
+                                fontWeight: selectedSize === size ? "bold" : "normal",
+                            }}
+                        >
+                            {size}
+                        </Button>
+                    ))}
                 </Box>
 
+                {/* <Box style={{ display: "flex", marginTop: 10 }}>
+                    <GroupButton onQuantityChange={(quantity) => addItemToCart(quantity)} />
+                </Box> */}
+
+                {/* Best Offer */}
                 <SmallText>
-                    <Typography
-                        style={{
-                            fontWeight: 600,
-                            marginTop: 20,
-                            fontSize: 18,
-                        }}
-                    >
+                    <Typography style={{ fontWeight: 600, marginTop: 20, fontSize: 18 }}>
                         Best Available Offer:
                     </Typography>
                     <BestOffer style={{ fontSize: 16 }}>
                         <StyledBadge /> Applicable on: Orders above Rs. 499
-                        (only on first purchase and value of your product Is
-                        2499)
-                    </BestOffer>
-                    <BestOffer style={{ fontSize: 16 }}>
-                        <StyledBadge /> Coupon code:{" "}
-                        <span style={{ fontWeight: 600 }}>BUY FIRST TIME</span>
                     </BestOffer>
                 </SmallText>
-                                {/* Delivery Options */}
-                                <Table>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell colSpan={2}>
-                                <BestOffer style={{ color: "#212121", fontWeight: 600 }}>
-                                    <LocalShipping
-                                    
-                                    style={{ fontSize: 27, marginRight: 10 }} />
-                                    Delivery Options:
-                                </BestOffer>
-                                <Typography
-                                    style={{ color: "#878787", marginTop: 8, fontSize: 14 }}
-                                >
-                                    Please enter PIN code to check delivery time & Pay on Delivery Availability
-                                </Typography>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <BestOffer>
-                                    Delivery by {date.toDateString()} ||{" "}
-                                    <span style={{ color: "green" }}>Delivery Charges: Free</span>
-                                </BestOffer>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <BestOffer style={{ fontWeight: 600 }}>
-                                    100% Original Products
-                                </BestOffer>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <BestOffer>Pay on delivery might be available</BestOffer>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <BestOffer>Easy 1 days returns and exchanges</BestOffer>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <img
-                                    src={adURL}
-                                    style={{ width: 390 }}
-                                    alt="Ad Banner"
-                                />
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <BestOffer style={{ color: "#878787" }}>
-                                    Description:
-                                </BestOffer>
-                                <BestOffer>{product.description}</BestOffer>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-
 
                 <Grid item lg={4} md={8} sm={8} xs={12}>
-                        <ActionItem product={product} />
-                    </Grid>
+                    <ActionItem product={product} onAddToCart={addItemToCart} />
+                </Grid>
             </DetailsContainer>
         </ProductContainer>
     );

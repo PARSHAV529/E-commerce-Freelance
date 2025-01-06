@@ -35,8 +35,13 @@ const productSchema = new mongoose.Schema({
     quantity: Number,
     description: String,
     discount: String,
+    size: {
+        type: [String], // Array of sizes, e.g., ["S", "M", "L", "XL"]
+        default: [],    // Default is an empty array if no sizes are provided
+    },
     reviews: [reviewSchema], // Array of reviews
 });
+
 const Product = mongoose.model('product', productSchema);
 
-export default  Product;
+export default Product;

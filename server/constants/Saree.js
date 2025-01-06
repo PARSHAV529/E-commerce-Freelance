@@ -55,40 +55,5 @@ export const Saree = [
         quantity: 1,
         description: 'This modern white kurti with a designer scarf is a versatile outfit, ideal for both everyday wear and special occasions.',
     },
-    // {
-    //     id: '14',
-    //     type: dressType,
-
-    //     url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653606/E-commerce/IMG-20241231-WA0019_xhzftb.jpg',
-    //     detailUrl: '',
-    //     title: {
-    //         shortTitle: 'Choli with Dupatta',
-    //         longTitle: 'Elegant choli with a matching dupatta, showcasing intricate craftsmanship.',
-    //     },
-    //     price: {
-    //         originalCost: 4500,
-    //         discount: '10%',
-    //         mrp: 4050,
-    //     },
-    //     quantity: 1,
-    //     description: 'This sophisticated choli and dupatta set exudes charm and is perfect for weddings and festive celebrations.',
-    // },
-    // {
-    //     id: '15',
-    //     type: dressType,
-
-    //     url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653607/E-commerce/IMG-20241231-WA0020_m3duka.jpg',
-    //     detailUrl: '',
-    //     title: {
-    //         shortTitle: 'Classic Outfit',
-    //         longTitle: 'A timeless outfit designed with style and comfort in mind.',
-    //     },
-    //     price: {
-    //         originalCost: 2000,
-    //         discount: '10%',
-    //         mrp: 1800,
-    //     },
-    //     quantity: 1,
-    //     description: 'This classic outfit is a must-have for your wardrobe, offering a perfect balance of tradition and modernity.',
-    // },
+   
 ];
