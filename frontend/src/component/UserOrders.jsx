@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody, CircularProgress } from '@mui/material';
 
 const UserOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const user = useSelector((state) => state.user.user);
-  console.log(user._id)
 
   useEffect(() => {
     fetchUserOrders();
@@ -18,6 +18,8 @@ const UserOrders = () => {
       setOrders(response.data);
     } catch (error) {
       console.error('Failed to fetch user orders:', error);
+    } finally {
+      setLoading(false); // Stop loading when the request is complete
     }
   };
 
@@ -26,32 +28,40 @@ const UserOrders = () => {
       <Typography variant="h4" gutterBottom>
         My Orders
       </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Order ID</TableCell>
-            <TableCell>Total Amount</TableCell>
-            <TableCell>Items</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders.map((order) => (
-            <TableRow key={order._id}>
-              <TableCell>{order._id}</TableCell>
-              <TableCell>{order.totalAmount}</TableCell>
-              <TableCell>
-                {order.items.map((item) => (
-                  <div key={item.productId._id}>
-                    {item.productId.title} - {item.quantity} x {item.price}
-                  </div>
-                ))}
-              </TableCell>
-              <TableCell>{order.orderStatus}</TableCell>
+
+      {/* Display loading spinner if data is being fetched */}
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Order ID</TableCell>
+              <TableCell>Total Amount</TableCell>
+              <TableCell>Items</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow key={order._id}>
+                <TableCell>{order._id}</TableCell>
+                <TableCell>{order.totalAmount}</TableCell>
+                <TableCell>
+                  {order.items.map((item) => (
+                    <div key={item.productId._id}>
+                      {item.productId.title} - {item.quantity} x {item.price}
+                    </div>
+                  ))}
+                </TableCell>
+                <TableCell>{order.orderStatus}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </Box>
   );
 };

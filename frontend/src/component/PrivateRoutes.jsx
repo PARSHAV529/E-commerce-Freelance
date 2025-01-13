@@ -1,20 +1,26 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function PrivateRoute({ children, requiredUserType }) {
+function PrivateRoute({ children, requiredUserType, isHomePage }) {
   const account = useSelector((state) => state.user.user); // Get user data from Redux store
+  const location = useLocation(); // Get the current location (for redirect after login)
 
-  if (!account) {
-    // Redirect to home with alert if user is not logged in
-    alert("Please log in first to access this page");
-    return <Navigate to="/" replace />;
+  if (!account && !isHomePage) {
+    // Restrict access to non-home pages if the user is not logged in
+    // Optionally, you could store the attempted page URL in localStorage and redirect the user back after login
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  const userType = account.userType; // Extract userType from account
+  if (!account && isHomePage) {
+    // Allow access to the home page even if the user is not logged in
+    return children;
+  }
+
+  const userType = account?.userType; // Extract userType from account
 
   if (requiredUserType && userType !== requiredUserType) {
-    // Restrict admin from accessing user routes and vice versa
-    alert(`Access denied: This page is restricted to ${requiredUserType}s.`);
+    // Restrict access based on userType
+    // Redirect to a relevant page based on the user's type
     return <Navigate to={userType === 'admin' ? '/admin-order' : '/'} replace />;
   }
 

@@ -1,7 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Dialog, Box, TextField, Typography, Button, styled } from '@mui/material';
 import { authenticateSignup, authenticateLogin } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
 
 const Components = styled(Box)`
     height: 65vh;
@@ -70,8 +72,16 @@ const LoginDialog = ({ open, setOpen }) => {
     const [signup, setSignup] = useState(signupInitialValues);
     const [login, setLogin] = useState(loginInitialValues);
     const [error, setError] = useState(false);
+    const dispatch = useDispatch()
 
-    const { setAccount } = useContext(DataContext);
+    const { account: userAccount, setAccount } = useContext(DataContext);
+
+    useEffect(() => {
+        if (userAccount) {
+            // If the user is logged in, toggle the view to show the username instead of the login button
+            toggleAccount(accountInitialValues.login);
+        }
+    }, [userAccount]);
 
     const handleClose = () => {
         setOpen(false);
@@ -92,30 +102,34 @@ const LoginDialog = ({ open, setOpen }) => {
             const { data } = response.data;
             localStorage.setItem('token', data.token); // Store the JWT token
             handleClose();
-            setAccount(signup.username);
+            setAccount(signup.username); // Set account here
         } else {
             setError(true); // Show error if signup fails
         }
     };
-    
 
     const onValueChange = (e) => {
         setLogin({ ...login, [e.target.name]: e.target.value });
     };
-
     const loginUser = async () => {
-        let response = await authenticateLogin(login);
-        if (response?.status === 200) {
-            const {  data } = response.data;
-            localStorage.setItem('token', data.token); // Store the JWT token
-            handleClose();
-console.log(data);
-            setAccount(data.username);
-        } else {
-            setError(true);
+        try {
+            const response = await authenticateLogin(login); // API call to backend
+            if (response?.status === 200) {
+                const { token, user } = response.data; // Destructure token and user
+                localStorage.setItem('token', token); // Store JWT token
+                dispatch(setUser(user)); // Update Redux store with user data
+                handleClose(); // Close the dialog
+                setError(false); // Reset error state
+                console.log(user); // Optional: log user data for debugging
+            } else {
+                setError(true); // Show error if login fails
+            }
+        } catch (error) {
+            console.error('Error during login:', error); // Log any errors
+            setError(true); // Set error state on failure
         }
     };
-
+    
     return (
         <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { maxWidth: 'unset' } }}>
             <Components>

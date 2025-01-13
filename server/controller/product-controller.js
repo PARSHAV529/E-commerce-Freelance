@@ -13,6 +13,19 @@ export const getProducts =async (request,response) => {
     }
 
 }
+export const updateProducts =async (req,res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          { new: true } // Returns the updated document
+        );
+        res.status(200).json(updatedProduct);
+      } catch (error) {
+        res.status(500).json({ message: 'Failed to update product', error });
+      }
+
+}
 
 export const getProductById = async (request,response) => {
     try {

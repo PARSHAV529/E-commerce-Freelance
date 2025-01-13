@@ -9,10 +9,9 @@ import {
 import { LocalOffer as Badge } from "@mui/icons-material";
 import ActionItem from "./ActionItems";
 import { useDispatch } from "react-redux";
-// import { useState } from "react";
 import { addToCart } from "../../redux/actions/cartAction";
-// import GroupButton from "./ButtonGroup"; // Import GroupButton
 
+// Styled Components
 const ProductContainer = styled(Box)`
     display: flex;
     padding: 20px;
@@ -56,6 +55,7 @@ const SmallText = styled(Box)`
     }
 `;
 
+// ProductDetail Component
 const ProductDetail = ({ product }) => {
     const [selectedSize, setSelectedSize] = useState("");
     const dispatch = useDispatch();
@@ -81,14 +81,14 @@ const ProductDetail = ({ product }) => {
 
             {/* Right: Product Details */}
             <DetailsContainer>
-                <Typography variant="h5">{product.title.longTitle}</Typography>
-                <Typography style={{ marginTop: 5, color: "#878787", fontSize: 14 }}>
-                    8 Rating & 1 Review
+            <Typography variant="h6">{product.title.shortTitle}</Typography>
+                <Typography variant="h5" style={{ marginTop: 5 }}>
+                    {product.title.longTitle}
                 </Typography>
 
                 <BestOffer>
                     <Box component="span" style={{ marginLeft: 15 }}>
-                        <strike>₹{product.price.orignalCost}</strike>
+                        <strike>₹{product.price.cost}</strike>
                     </Box>
                     &nbsp;&nbsp;&nbsp;
                     <Box component="span" style={{ fontSize: 22, color: "#212121" }}>
@@ -104,7 +104,7 @@ const ProductDetail = ({ product }) => {
                     Select Your Size:
                 </Typography>
                 <Box style={{ display: "flex", gap: "10px", marginTop: 10 }}>
-                    {["M", "L", "XL", "XXL"].map((size) => (
+                    {product.size.map((size) => (
                         <Button
                             key={size}
                             variant="outlined"
@@ -120,12 +120,16 @@ const ProductDetail = ({ product }) => {
                     ))}
                 </Box>
 
-                {/* <Box style={{ display: "flex", marginTop: 10 }}>
-                    <GroupButton onQuantityChange={(quantity) => addItemToCart(quantity)} />
-                </Box> */}
+                 {/* Descriptions */}
+                 <Typography style={{ marginTop: 20, fontWeight: 600, fontSize: 18 }}>
+                    Description:
+                </Typography>
+                <Typography style={{ marginTop: 10, color: "#555" }}>
+                    {product.description}
+                </Typography>
 
-                {/* Best Offer */}
-                <SmallText>
+                 {/* Best Offer */}
+                 <SmallText>
                     <Typography style={{ fontWeight: 600, marginTop: 20, fontSize: 18 }}>
                         Best Available Offer:
                     </Typography>
