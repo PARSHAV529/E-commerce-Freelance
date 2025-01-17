@@ -20,6 +20,42 @@ export const choli = [
         description: 'This elegant kurta set includes a beautifully embroidered kurta, salwar, and a Gaagi dupatta, perfect for festive and traditional events.',
     },
     {
+        id: 'rfgn',
+        type: dressType,
+
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653600/E-commerce/IMG-20241231-WA0021_pyqkic.jpg',
+        detailUrl: "https://imgur.com/SeXkzkg.png",
+        title: {
+            shortTitle: 'Ethnic Embroidered Kurta Set',
+            longTitle: 'Ethnic motifs embroidered kurta with salwar and Gaagi dupatta in vibrant red, featuring detailed thread work and premium fabric.',
+        },
+        price: {
+            originalCost: 3000,
+            discount: '10%',
+            mrp: 2700,
+        },
+        quantity: 1,
+        description: 'This elegant kurta set includes a beautifully embroidered kurta, salwar, and a Gaagi dupatta, perfect for festive and traditional events.',
+    },
+    {
+        id: 'gfg',
+        type: dressType,
+
+        url: 'https://res.cloudinary.com/drsuf7z53/image/upload/v1735653600/E-commerce/IMG-20241231-WA0021_pyqkic.jpg',
+        detailUrl: "https://imgur.com/SeXkzkg.png",
+        title: {
+            shortTitle: 'Ethnic Embroidered Kurta Set',
+            longTitle: 'Ethnic motifs embroidered kurta with salwar and Gaagi dupatta in vibrant red, featuring detailed thread work and premium fabric.',
+        },
+        price: {
+            originalCost: 3000,
+            discount: '10%',
+            mrp: 2700,
+        },
+        quantity: 1,
+        description: 'This elegant kurta set includes a beautifully embroidered kurta, salwar, and a Gaagi dupatta, perfect for festive and traditional events.',
+    },
+    {
         id: 'krutis2',
         type: dressType,
 

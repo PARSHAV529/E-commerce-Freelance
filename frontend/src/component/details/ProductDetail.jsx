@@ -138,14 +138,14 @@ const ProductDetail = ({ product }) => {
 
              {/* Best Offer */}
              <SmallText>
-                <Typography style={{ fontWeight: 600, marginTop: 20, fontSize: 18 }}>
+                {/* <Typography style={{ fontWeight: 600, marginTop: 20, fontSize: 18 }}>
                     Best Available Offer:
                 </Typography>
                 <BestOffer style={{ fontSize: 16 }}>
                     <StyledBadge /> Applicable on: Orders above Rs. 499
                     <BestOffer style={{  fontSize: 16 }}><StyledBadge />  Coupon code: <styled style={{ fontWeight: 600 }}>BUY FIRST TIME </styled> </BestOffer>
 
-                </BestOffer>
+                </BestOffer> */}
                 <BestOffer style={{ fontWeight: 600, }}> 
                         Delivery by {"date"} || 
                        <styled style={{ color: 'green'}}>Delivery Charges: Free</styled> 

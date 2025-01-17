@@ -20,7 +20,7 @@ router.post('/validate-pincode',validatePincode);
 router.get('/admin/orders', getAllOrders);
 router.put('/admin/orders/:orderId', updateOrderStatus);
 router.post('/admin/products', AdminAddProduct);
-router.delete('/products/:id', DeleteAddProduct);
+router.delete('/products/:id', DeleteAddProduct)
 
 // User routes
 router.get('/user/orders/:userId', getUserOrders);

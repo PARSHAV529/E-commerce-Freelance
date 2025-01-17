@@ -10,6 +10,7 @@ import ActionItem from "./ActionItems";
 import ProductDetail from "./ProductDetail";
 import Slide from "../home/slide"; // Reusing Slide component
 import Reviews from "./Review";
+import ProductList from "./ProductList";
 
 const Components = styled(Box)`
     margin-top: 55px;
@@ -102,11 +103,8 @@ const DetailView = () => {
                             Object.keys(groupedSuggestions).map(type => (
                                 <Box key={type} mb={4}>
                                     <SectionTitle>{`More ${type}s You May Like`}</SectionTitle>
-                                    <Slide
-                                        products={groupedSuggestions[type]}
-                                        title=""
-                                        timer={false}
-                                    />
+                                    <ProductList products={groupedSuggestions[type]} />
+
                                 </Box>
                             ))
                         }

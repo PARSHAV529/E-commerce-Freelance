@@ -102,7 +102,7 @@ const DefaultData = async () => {
         // await Product.deleteMany({});
         // await Order.deleteMany({});
 
-        // await Product.insertMany(choli);
+        await Product.insertMany(choli);
         // await Product.insertMany(Saree);
        
 
