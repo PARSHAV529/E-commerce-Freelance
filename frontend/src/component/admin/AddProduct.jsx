@@ -24,12 +24,10 @@ const AdminAddProduct = () => {
     id: "",
     type: "",
     url: "",
-    detailUrl: "",
     title: { shortTitle: "", longTitle: "" },
     price: { mrp: 0, cost: 0, discount: "" },
     quantity: 0,
     description: "",
-    discount: "",
     size: [],
   });
 
@@ -86,7 +84,7 @@ const AdminAddProduct = () => {
         await axios.put(`http://localhost:8000/products/${editProductId}`, formData);
         alert("Product updated successfully!");
       } else {
-        await axios.post("http://localhost:8000/products", formData);
+        await axios.post("http://localhost:8000/admin/products", formData);
         alert("Product added successfully!");
       }
       resetForm();
@@ -103,12 +101,10 @@ const AdminAddProduct = () => {
       id: "",
       type: "",
       url: "",
-      detailUrl: "",
       title: { shortTitle: "", longTitle: "" },
       price: { mrp: 0, cost: 0, discount: "" },
       quantity: 0,
       description: "",
-      discount: "",
       size: [],
     });
     setSizes("");
@@ -133,6 +129,18 @@ const AdminAddProduct = () => {
     setOpen(false);
     resetForm();
   };
+  const handleDelete = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await axios.delete(`http://localhost:8000/products/${productId}`);
+        alert("Product deleted successfully!");
+        fetchProducts(); // Refresh the product list after deletion
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+        alert("Failed to delete product");
+      }
+    }
+  };
 
   return (
     <Box sx={{ padding: "20px" }}>
@@ -149,7 +157,16 @@ const AdminAddProduct = () => {
         <DialogTitle>{isEdit ? "Edit Product" : "Add Product"}</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
+          <TextField
+              fullWidth
+              label="id"
+              name="id"
+              value={formData.id}
+              onChange={handleChange}
+              margin="normal"
+            />
             <FormControl fullWidth margin="normal">
+           
               <InputLabel>Type</InputLabel>
               <Select
                 name="type"
@@ -172,14 +189,7 @@ const AdminAddProduct = () => {
               onChange={handleChange}
               margin="normal"
             />
-            <TextField
-              fullWidth
-              label="Detail URL"
-              name="detailUrl"
-              value={formData.detailUrl}
-              onChange={handleChange}
-              margin="normal"
-            />
+           
             <TextField
               fullWidth
               label="Short Title"
@@ -312,6 +322,14 @@ const AdminAddProduct = () => {
                     >
                       Edit
                     </Button>
+                    <Button
+        variant="contained"
+        color="error"
+        onClick={() => handleDelete(product._id)}
+        sx={{ marginTop: "10px" }}
+      >
+        Delete
+      </Button>
                   </CardContent>
                 </Card>
               </Grid>

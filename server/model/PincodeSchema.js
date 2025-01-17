@@ -13,6 +13,6 @@ const PincodeSchema = new mongoose.Schema({
 });
 
 
-const Pincode = mongoose.model('Pincode', PincodeSchema);
+const Pincode = mongoose.model('Pincode', PincodeSchema)
 
 export default Pincode;

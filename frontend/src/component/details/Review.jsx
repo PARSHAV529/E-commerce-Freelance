@@ -3,13 +3,15 @@ import { TextField, Button, Box, Typography, CircularProgress } from '@mui/mater
 import axios from 'axios';
 import { DataContext } from '../../context/DataProvider';
 import { Rating } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const Reviews = ({ productId }) => {
     const [reviews, setReviews] = useState([]);
-    const { account, setAccount } = useContext(DataContext);
-    const [review, setReview] = useState({ user: account, rating: 0, comment: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const user = useSelector(s=>s.user.user.username)
+    const [review, setReview] = useState({ user: user, rating: 0, comment: '' });
+
 
     useEffect(() => {
         fetchReviews();
@@ -37,7 +39,7 @@ const Reviews = ({ productId }) => {
         try {
             const response = await axios.post(`http://localhost:8000/product/${productId}/review`, review);
             setReviews([...reviews, response.data.review]);
-            setReview({ user: account, rating: 0, comment: '' });
+            setReview({ user: user, rating: 0, comment: '' });
         } catch (err) {
             setError('Failed to submit review. Please try again.');
         }

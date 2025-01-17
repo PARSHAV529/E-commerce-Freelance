@@ -157,18 +157,61 @@ export const getAllOrders = async (req, res) => {
     }
   };
 
+  import mongoose from 'mongoose';
+
   export const getUserOrders = async (req, res) => {
     const { userId } = req.params;
-    console.log(userId);
-    
   
     try {
-      const orders = await Order.find({ userId })
+      const orders = await Order.aggregate([
+        {
+          $match: { userId: new mongoose.Types.ObjectId(userId) }, // Ensure userId is converted to ObjectId
+        },
+        {
+          $unwind: {
+            path: '$items', // Deconstruct the items array
+            preserveNullAndEmptyArrays: true, // Handle empty or missing items arrays
+          },
+        },
+        {
+          $lookup: {
+            from: 'products', // Replace with your Product collection name
+            localField: 'items.productId', // Field in the Order schema
+            foreignField: '_id', // Field in the Product schema
+            as: 'productDetails', // Output field for matched product details
+          },
+        },
+        {
+          $unwind: {
+            path: '$productDetails', // Flatten productDetails array
+            preserveNullAndEmptyArrays: true, // Handle missing product details
+          },
+        },
+        {
+          $group: {
+            _id: '$_id', // Group by order ID
+            userId: { $first: '$userId' },
+            totalAmount: { $first: '$totalAmount' },
+            orderStatus: { $first: '$orderStatus' },
+            createdAt: { $first: '$createdAt' },
+            items: {
+              $push: {
+                productId: '$items.productId',
+                quantity: '$items.quantity',
+                productDetails: '$productDetails',
+              },
+            },
+          },
+        },
+      ]);
+  
       res.status(200).json(orders);
     } catch (error) {
+      console.error('Error fetching orders:', error.message);
       res.status(500).json({ message: 'Failed to fetch user orders', error });
     }
   };
+  
 
 
 export { placeOrder,updateAddress,validatePincode };

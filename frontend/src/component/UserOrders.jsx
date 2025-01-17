@@ -49,10 +49,14 @@ const UserOrders = () => {
               <TableRow key={order._id}>
                 <TableCell>{order._id}</TableCell>
                 <TableCell>{order.totalAmount}</TableCell>
+                
                 <TableCell>
                   {order.items.map((item) => (
-                    <div key={item.productId._id}>
-                      {item.productId.title} - {item.quantity} x {item.price}
+                    <div key={item.productDetails
+                      ._id}>
+                      
+                      {item.productDetails
+.title.shortTitle} - {item.quantity} x {item.productDetails.price.mrp}
                     </div>
                   ))}
                 </TableCell>

@@ -14,7 +14,7 @@ const StyledHeader = styled(AppBar)`
 `;
 
 const Component = styled(Link)`
-  display: flex;
+  
   align-items: center;
   text-decoration: none;
   color: #fff;
@@ -84,12 +84,12 @@ const Header = () => {
           {list()}
         </Drawer>
 
-        <Component to="/">
+        <Component to="/" style={{marginTop: 10}}>
           <img src={logoURL} alt="logo" style={{ width: 80, height: 18 }} />
-          <Box>Emporium</Box>
+          <Box style={{marginLeft:'20px'}}>Emporium</Box>
         </Component>
 
-        {userType === "user" && (
+        {userType === "admin" ? (<></>): (
         //   <SearchWrapper>
             <Search />
         //   </SearchWrapper>

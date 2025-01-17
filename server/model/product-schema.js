@@ -26,10 +26,11 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+    
     },
     type: String,
     url: String,
-    detailUrl: String,
+
     title: Object,
     price: Object,
     quantity: Number,

@@ -80,9 +80,9 @@ const AdminOrders = () => {
               </TableCell>
               <TableCell>{order.totalAmount}</TableCell>
               <TableCell>
-                {order.items.map((item) => (
-                  <div key={item.productId._id}>
-                    {item.productId.title.shortTitle} - {item.quantity} x {item.price}
+                {order?.items.map((item) => (
+                  <div key={item.productId}>
+                    {item.productId?.title.shortTitle} - {item.quantity} x {item.price}
                   </div>
                 ))}
               </TableCell>

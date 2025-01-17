@@ -31,10 +31,11 @@ const Container = styled(Link)(({ theme }) => ({
 })); 
  
 const LoginButton = styled(Button)` 
-    font-weight: 600; 
+    // font-weight: 600; 
     text-transform: none; 
-    padding: 5px 40px; 
+    // padding: 5px 40px; 
     border-radius: 5px; 
+    margin-top:10px;
     box-shadow: none; 
     font-size: 20px; 
     background: #212121; 

@@ -29,7 +29,6 @@ const Home = () => {
     const [loading, setLoading] = useState(true); // Loader state
 
     useEffect(() => {
-        // Simulate data fetching
         const fetchData = async () => {
             setLoading(true);
             await dispatch(getProducts());
@@ -38,9 +37,11 @@ const Home = () => {
         fetchData();
     }, [dispatch]);
 
-    // Function to filter products by type
+    // Function to filter products by type and show top 5
     const filterProductsByType = (type) => {
-        return products.filter(product => product.type === type);
+        return products && products
+            .filter(product => product.type === type)
+            .slice(0, 5); // Limit to top 5 products
     };
 
     if (loading) {
@@ -56,10 +57,11 @@ const Home = () => {
             <NavBar />
             <Component>
                 <Banner />
-                <Slide products={filterProductsByType("dress")} title="Dress & Kurtis" timer={false} />
-                <Slide products={filterProductsByType("gown")} title="Gown" timer={false} />
-                <Slide products={filterProductsByType("Saree")} title="Saree" timer={false} />
-                <Slide products={filterProductsByType("choli")} title="Bridal Lehenga" timer={false} />
+                <Slide products={filterProductsByType("dress")} title="Dresses" timer={false} />
+                <Slide products={filterProductsByType("kurti")} title="Kurtis" timer={false} />
+                <Slide products={filterProductsByType("gown")} title="Gowns" timer={false} />
+                <Slide products={filterProductsByType("saree")} title="Sarees" timer={false} />
+                <Slide products={filterProductsByType("choli")} title="Bridal Lehengas" timer={false} />
                 <MidSection />
             </Component>
         </>

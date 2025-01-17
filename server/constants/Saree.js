@@ -1,4 +1,4 @@
-const dressType = 'Saree'
+const dressType = 'saree'
 
 export const Saree = [
     {
