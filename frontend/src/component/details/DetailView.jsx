@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { getProductDetails } from '../../redux/actions/productActions';
+import { getProductDetails } from "../../redux/actions/productActions";
 
 import { Box, styled, Typography } from "@mui/material";
 
-import ActionItem from "./ActionItems";
 import ProductDetail from "./ProductDetail";
-import Slide from "../home/slide"; // Reusing Slide component
 import Reviews from "./Review";
 import ProductList from "./ProductList";
 
@@ -19,23 +17,23 @@ const Components = styled(Box)`
 `;
 
 const Container = styled(Box)(({ theme }) => ({
-    background: '#FFFFFF',
-    display: 'flex',
-    flexDirection: 'row',
-    borderRadius: '8px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    marginBottom: '20px',
-    [theme.breakpoints.down('md')]: {
-        flexDirection: 'column',
-        padding: '15px'
-    }
+    background: "#FFFFFF",
+    display: "flex",
+    flexDirection: "row",
+    borderRadius: "8px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    marginBottom: "20px",
+    [theme.breakpoints.down("md")]: {
+        flexDirection: "column",
+        padding: "15px",
+    },
 }));
 
 const RightContainer = styled(Box)`
     margin-left: 20px;
     flex: 1;
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down("md")]: {
         margin-left: 0;
         margin-top: 20px;
     }
@@ -60,8 +58,8 @@ const DetailView = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
-    const { loading, product } = useSelector(state => state.getProductDetails);
-    const { products } = useSelector(state => state.getProducts);
+    const { loading, product } = useSelector((state) => state.getProductDetails);
+    const { products } = useSelector((state) => state.getProducts);
 
     useEffect(() => {
         if (product && id !== product.id) {
@@ -69,26 +67,23 @@ const DetailView = () => {
         }
     }, [dispatch, id, product]);
 
-    // Group remaining products by type, excluding top 5 of each type and the current product
-    const groupedSuggestions = products.reduce((acc, p) => {
-        if (p.id !== id) {
-            const isTop5 = products
-                .filter(product => product.type === p.type)
-                .slice(0, 5)
-                .some(topProduct => topProduct.id === p.id);
+    let suggestions = [];
+    if (product && Object.keys(product).length) {
+        const productType = product.type; // Get the type of the current product
+        const filteredProducts = products.filter((p) => p.id !== id && p.type === productType);
 
-            if (!isTop5) {
-                acc[p.type] = acc[p.type] || [];
-                acc[p.type].push(p);
-            }
-        }
-        return acc;
-    }, {});
+        // Extract top 5 products of the same type
+        const top5Products = filteredProducts.slice(0, 5);
+
+        // Get all other products excluding top 5
+        suggestions = filteredProducts.filter(
+            (p) => !top5Products.some((topProduct) => topProduct.id === p.id)
+        );
+    }
 
     return (
         <Components>
-            {
-                product && Object.keys(product).length &&
+            {product && Object.keys(product).length && (
                 <>
                     <Container>
                         <RightContainer>
@@ -99,18 +94,15 @@ const DetailView = () => {
                     <Reviews productId={id} />
 
                     <Suggestions>
-                        {
-                            Object.keys(groupedSuggestions).map(type => (
-                                <Box key={type} mb={4}>
-                                    <SectionTitle>{`More ${type}s You May Like`}</SectionTitle>
-                                    <ProductList products={groupedSuggestions[type]} />
-
-                                </Box>
-                            ))
-                        }
+                        {suggestions.length > 0 && (
+                            <>
+                                <SectionTitle>{`More ${product.type}s You May Like`}</SectionTitle>
+                                <ProductList products={suggestions} />
+                            </>
+                        )}
                     </Suggestions>
                 </>
-            }
+            )}
         </Components>
     );
 };

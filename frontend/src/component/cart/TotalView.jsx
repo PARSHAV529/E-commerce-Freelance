@@ -48,9 +48,11 @@ const TotalView = ({ cartItems }) => {
 
     const totalAmount = () => {
         let price = 0, discount = 0;
+        console.log(cartItems);
+        
         cartItems.map(item => {
-            price += item.price.orignalCost;
-            discount += (item.price.orignalCost - item.price.mrp)
+            price += item.price.cost * item.quantity;
+            discount += (item.price.cost  - item.price.mrp) 
         });
         setPrice(price);
         setDiscount(discount);
@@ -65,7 +67,7 @@ const TotalView = ({ cartItems }) => {
                     <Price component="span">₹{price}</Price>
                 </Typography>
                 <Typography >Discount 
-                    <Price component="span">-₹{discount}</Price>
+                    <Price component="span">₹{discount}</Price>
                 </Typography>
                 <Typography style={{ color: 'green'}}>Delivery Charges
                     <Price component="span">₹0</Price>

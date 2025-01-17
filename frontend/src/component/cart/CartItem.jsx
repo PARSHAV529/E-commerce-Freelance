@@ -51,6 +51,8 @@ const CartItem = ({ item }) => {
         setQuantity((prev) => Math.max(1, prev - 1));
     };
 
+    // console.log();
+    
     // Dispatch updated quantity to the Redux store if needed
     useEffect(() => {
         // Update quantity in the cart store
@@ -64,14 +66,14 @@ const CartItem = ({ item }) => {
                 <GroupButton quantity={quantity} onIncrease={handleQuantityIncrease} onDecrease={handleQuantityDecrease} />
             </LeftComponent>
             <Box style={{ margin: 20 }}>
-                <Typography>{addEllipsis(item.title.longTitle)}</Typography>
+                <Typography>{addEllipsis(item.title.shortTitle)}</Typography>
                 <Typography style={{ margin: "20px 0px" }}>
                     <Box component="span" style={{ fontSize: 18, color: "#212121", fontWeight: 600 }}>
                         ₹ {item.price.mrp}
                     </Box>
                     &nbsp;&nbsp;&nbsp;
                     <Box component="span" style={{ color: "#878787" }}>
-                        <strike>₹{item.price.orignalCost}</strike>
+                        <strike>₹{item.price.cost}</strike>
                     </Box>
                     &nbsp;&nbsp;&nbsp;
                     <Box component="span" style={{ color: "#388E3C" }}>{item.price.discount}</Box>
