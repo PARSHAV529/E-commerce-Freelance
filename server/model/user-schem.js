@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     userType: {
         type: String,
-        default: 'admin',
+        default: 'user',
     },
     address: {
         street: { type: String },

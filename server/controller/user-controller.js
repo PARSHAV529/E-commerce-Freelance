@@ -31,7 +31,7 @@ export const userSignup = async (request, response) => {
 
         // Respond with token and message
         response.status(200).json({ 
-            data: { token, username: newUser.username }, 
+            data: { token, user: newUser }, 
             message: 'Signup and login successful' 
         });
     } catch (error) {

@@ -9,7 +9,7 @@ const Reviews = ({ productId }) => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const user = useSelector(s=>s.user.user.username)
+    const user = useSelector(s=>s.user.user?.username)
     const [review, setReview] = useState({ user: user, rating: 0, comment: '' });
 
 

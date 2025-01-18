@@ -102,7 +102,7 @@ const LoginDialog = ({ open, setOpen }) => {
             const { data } = response.data;
             localStorage.setItem('token', data.token); // Store the JWT token
             handleClose();
-            setAccount(signup.username); // Set account here
+            dispatch(setUser(data.user)); // Update Redux store with user data
         } else {
             setError(true); // Show error if signup fails
         }

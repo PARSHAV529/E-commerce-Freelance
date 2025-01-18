@@ -74,10 +74,10 @@ function MainApp() {
       <Box style={{ marginTop: 74 }}>
         <Routes>
           <Route path="/" element={<PrivateRoute requiredUserType="user" isHomePage={true}><Home /></PrivateRoute>} />
-          <Route path="/product/:id" element={<PrivateRoute requiredUserType="user"><DetailView /></PrivateRoute>} />
-          <Route path="/add-address" element={<PrivateRoute requiredUserType="user"><AddAddress /></PrivateRoute>} />
+          <Route path="/product/:id" element={<PrivateRoute requiredUserType="user" isHomePage={true}><DetailView /></PrivateRoute>} />
+          <Route path="/add-address" element={<PrivateRoute requiredUserType="user" ><AddAddress /></PrivateRoute>} />
           <Route path="/confirm-address" element={<PrivateRoute requiredUserType="user"><ConfirmAddress /></PrivateRoute>} />
-          <Route path="/cart" element={<PrivateRoute requiredUserType="user"><Cart /></PrivateRoute>} />
+          <Route path="/cart" element={<PrivateRoute requiredUserType="user" isHomePage={true}><Cart /></PrivateRoute>} />
           <Route path="/order" element={<PrivateRoute requiredUserType="user"><UserOrders /></PrivateRoute>} />
           <Route path="/admin-order" element={<PrivateRoute requiredUserType="admin"><AdminOrders /></PrivateRoute>} />
           <Route path="/add-products" element={<PrivateRoute requiredUserType="admin"><AdminAddProduct /></PrivateRoute>} />
